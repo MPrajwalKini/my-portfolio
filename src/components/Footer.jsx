@@ -19,7 +19,7 @@ const Footer = () => {
                     <a href="https://www.linkedin.com/in/m-prajwal-kini-885037221/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', fontSize: '1.5rem', transition: 'color 0.3s' }} className="social-icon">
                         <FaLinkedin />
                     </a>
-                    <a href="mailto:contact@example.com" style={{ color: 'var(--text-secondary)', fontSize: '1.5rem', transition: 'color 0.3s' }} className="social-icon">
+                    <a href="mailto:mprajwalkini01@gmail.com" style={{ color: 'var(--text-secondary)', fontSize: '1.5rem', transition: 'color 0.3s' }} className="social-icon">
                         <FaEnvelope />
                     </a>
                 </div>

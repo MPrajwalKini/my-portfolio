@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -10,6 +12,8 @@ const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
         <nav style={{
@@ -20,15 +24,17 @@ const Navbar = () => {
             padding: '20px 0',
             zIndex: 1000,
             transition: 'all 0.3s ease',
-            background: scrolled ? 'rgba(5, 5, 5, 0.8)' : 'transparent',
-            backdropFilter: scrolled ? 'blur(10px)' : 'none',
-            borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : 'none'
+            background: scrolled || isOpen ? 'rgba(5, 5, 5, 0.9)' : 'transparent',
+            backdropFilter: scrolled || isOpen ? 'blur(10px)' : 'none',
+            borderBottom: scrolled || isOpen ? '1px solid rgba(255,255,255,0.05)' : 'none'
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <a href="#" style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff' }}>
+                <a href="#" style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', zIndex: 1001 }}>
                     MPK<span style={{ color: 'var(--accent-primary)' }}>.</span>
                 </a>
-                <div style={{ display: 'flex', gap: '30px' }}>
+
+                {/* Desktop Menu */}
+                <div className="desktop-menu" style={{ display: 'flex', gap: '30px' }}>
                     {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
                         <a key={item} href={`#${item.toLowerCase()}`} style={{
                             color: 'var(--text-secondary)',
@@ -40,6 +46,41 @@ const Navbar = () => {
                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
                         >
+                            {item}
+                        </a>
+                    ))}
+                </div>
+
+                {/* Mobile Menu Button */}
+                <div className="mobile-menu-btn" onClick={toggleMenu} style={{ fontSize: '1.5rem', color: '#fff', cursor: 'pointer', zIndex: 1001 }}>
+                    {isOpen ? <FaTimes /> : <FaBars />}
+                </div>
+
+                {/* Mobile Menu Overlay */}
+                <div className={`mobile-menu ${isOpen ? 'open' : ''}`} style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100vh',
+                    background: 'rgba(5, 5, 5, 0.98)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '40px',
+                    transition: 'transform 0.3s ease-in-out',
+                    transform: isOpen ? 'translateY(0)' : 'translateY(-100%)',
+                    zIndex: 1000
+                }}>
+                    {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
+                        <a key={item} href={`#${item.toLowerCase()}`} onClick={toggleMenu} style={{
+                            color: '#fff',
+                            fontSize: '2rem',
+                            fontWeight: '700',
+                            textTransform: 'uppercase',
+                            letterSpacing: '2px'
+                        }}>
                             {item}
                         </a>
                     ))}

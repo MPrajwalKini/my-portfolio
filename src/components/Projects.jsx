@@ -1,61 +1,47 @@
-import React, { useRef } from 'react';
-import { FaGithub } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaGithub, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const ProjectCard = ({ project, index }) => {
-    const cardRef = useRef(null);
-
-    const handleMouseMove = (e) => {
-        const card = cardRef.current;
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-    };
-
-    const handleMouseLeave = () => {
-        const card = cardRef.current;
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    };
-
-    return (
-        <div
-            ref={cardRef}
-            className="glass-card animate-slide-up"
-            style={{
-                padding: '40px',
-                animationDelay: `${index * 0.1}s`,
-                transition: 'transform 0.1s ease-out',
-                transformStyle: 'preserve-3d'
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-        >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px', transform: 'translateZ(20px)' }}>
-                <h3 style={{ fontSize: '1.8rem', marginBottom: 0 }}>{project.title}</h3>
-                <span style={{
-                    fontSize: '0.75rem',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    padding: '6px 12px',
-                    borderRadius: '20px',
-                    color: 'var(--text-secondary)',
-                    border: '1px solid rgba(255,255,255,0.1)'
-                }}>{project.type}</span>
+const ProjectCard = ({ project, index, isMobile }) => {
+    const cardContent = (
+        <div className="glass-card project-card-link" style={{
+            width: isMobile ? '100%' : '300px',
+            height: isMobile ? 'auto' : '420px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: isMobile ? '20px' : '25px',
+            background: 'rgba(20, 20, 20, 0.9)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: '0 0 20px rgba(0, 242, 255, 0.05)',
+            transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
+            transition: 'all 0.3s ease',
+            cursor: project.repoUrl ? 'pointer' : 'default'
+        }}>
+            <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                    <span style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: '800', color: 'rgba(255,255,255,0.05)', lineHeight: 1 }}>0{index + 1}</span>
+                    {project.repoUrl ? (
+                        <FaGithub style={{ fontSize: isMobile ? '1.2rem' : '1.4rem', color: 'var(--text-secondary)' }} />
+                    ) : (
+                        <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '4px 8px', borderRadius: '4px', letterSpacing: '1px' }}>PRIVATE</span>
+                    )}
+                </div>
+                <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '10px', lineHeight: 1.1, wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
+                <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--accent-primary)', display: 'block', marginBottom: '15px', wordWrap: 'break-word' }}>{project.type}</span>
+                <p style={{ color: 'var(--text-secondary)', fontSize: isMobile ? '0.8rem' : '0.85rem', lineHeight: 1.6, marginBottom: '15px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.description}</p>
             </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '1.1rem', transform: 'translateZ(10px)' }}>{project.description}</p>
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', transform: 'translateZ(15px)' }}>
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {project.tags.map((tag, i) => (
                     <span key={i} style={{
-                        fontSize: '0.9rem',
-                        color: 'var(--accent-primary)',
-                        background: 'rgba(0, 242, 255, 0.05)',
-                        border: '1px solid rgba(0, 242, 255, 0.2)',
-                        padding: '6px 14px',
-                        borderRadius: '20px'
+                        fontSize: '0.7rem',
+                        color: 'rgba(255,255,255,0.8)',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(255, 255, 255, 0.05)'
                     }}>
                         {tag}
                     </span>
@@ -63,43 +49,215 @@ const ProjectCard = ({ project, index }) => {
             </div>
         </div>
     );
+
+    if (project.repoUrl) {
+        return (
+            <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+                {cardContent}
+            </a>
+        );
+    }
+
+    return cardContent;
 };
 
 const Projects = () => {
+    const [rotation, setRotation] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [startRotation, setStartRotation] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const projects = [
         {
-            title: 'Docconverter',
-            description: 'A document conversion automation tool designed to streamline file processing workflows.',
-            tags: ['Python', 'Automation', 'File Processing'],
-            type: 'Private Repository'
+            title: 'Jarvis Assistant 3.12v',
+            type: 'AI Voice Assistant',
+            description: 'A powerful, AI-enhanced personal voice assistant for Windows. Features robust local command processing, AI fallback, and smooth Jarvis-style voice responses. Fully compatible with Python 3.12.',
+            tags: ['Python 3.12', 'AI', 'Automation', 'Windows'],
+            repoUrl: null
         },
         {
-            title: 'Jarvis Assistant 3.12v',
-            description: 'An advanced AI assistant project built with Python 3.12, featuring voice recognition and task automation capabilities.',
-            tags: ['Python 3.12', 'AI', 'Automation'],
-            type: 'Private Repository'
+            title: 'DocConvert',
+            type: 'Privacy Utility',
+            description: 'Local, privacy-focused document and PDF utility built with Python and Flask. Convert, merge, and sign documents locally with no cloud uploads.',
+            tags: ['Python', 'Flask', 'Privacy', 'Local'],
+            repoUrl: null
+        },
+        {
+            title: 'UPaiMonitor',
+            type: 'Android App',
+            description: 'UPI Transaction Monitor Android Application. Tracks and monitors UPI transactions with a user-friendly mobile interface.',
+            tags: ['Kotlin', 'Android', 'Finance', 'Mobile'],
+            repoUrl: 'https://github.com/MPrajwalKini/UPaiMonitor'
+        },
+        {
+            title: 'URL Shortener Vercel',
+            type: 'Web Application',
+            description: 'A URL shortener website and PWA built with Vercel serverless functions, MongoDB, and NodeJS. Efficient and scalable link management.',
+            tags: ['NodeJS', 'MongoDB', 'PWA', 'Serverless'],
+            repoUrl: 'https://github.com/MPrajwalKini/lenk.cf'
+        },
+        {
+            title: 'YouTube Downloader',
+            type: 'Web Application',
+            description: 'Local YouTube video downloader and trimmer with Flask backend. Download and trim videos privately without cloud uploads.',
+            tags: ['Python', 'Flask', 'yt-dlp', 'FFmpeg'],
+            repoUrl: 'https://github.com/MPrajwalKini/youtube-downloader-local'
         }
     ];
 
+    // Group projects into faces (2 per face) for desktop
+    const projectsPerFace = 2;
+    const faces = [];
+    for (let i = 0; i < projects.length; i += projectsPerFace) {
+        faces.push(projects.slice(i, i + projectsPerFace));
+    }
+
+    const totalFaces = faces.length;
+    const anglePerFace = 360 / totalFaces;
+    const radius = 500;
+
+    const handleMouseDown = (e) => {
+        if (isMobile) return;
+        setIsDragging(true);
+        setStartX(e.pageX);
+        setStartRotation(rotation);
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging || isMobile) return;
+        const deltaX = e.pageX - startX;
+        setRotation(startRotation + deltaX * 0.3);
+    };
+
+    const handleMouseUp = () => {
+        if (isMobile) return;
+        setIsDragging(false);
+        const snappedRotation = Math.round(rotation / anglePerFace) * anglePerFace;
+        setRotation(snappedRotation);
+    };
+
+    const rotate = (direction) => {
+        if (isMobile) {
+            // Mobile: simple card navigation
+            if (direction === 'left') {
+                setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+            } else {
+                setCurrentIndex((prev) => (prev + 1) % projects.length);
+            }
+        } else {
+            // Desktop: 3D carousel
+            const newRotation = rotation + (direction === 'left' ? anglePerFace : -anglePerFace);
+            setRotation(newRotation);
+        }
+    };
+
     return (
-        <section id="projects">
-            <div className="container">
-                <h2 className="animate-slide-up" style={{ textAlign: 'center' }}>Featured <span className="text-gradient">Projects</span></h2>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                    gap: '30px',
-                    marginBottom: '60px',
-                    marginTop: '40px'
-                }}>
-                    {projects.map((project, index) => (
-                        <ProjectCard key={index} project={project} index={index} />
-                    ))}
+        <section id="projects" style={{ overflow: 'hidden' }}>
+            <div className="container" style={{ perspective: isMobile ? 'none' : '2500px' }}>
+                <h2 className="animate-slide-up" style={{ textAlign: 'center', marginBottom: '60px' }}>Featured <span className="text-gradient">Projects</span></h2>
+
+                {isMobile ? (
+                    // Mobile: Simple card view
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: '420px',
+                        padding: '20px 0'
+                    }}>
+                        <ProjectCard
+                            project={projects[currentIndex]}
+                            index={currentIndex}
+                            isMobile={true}
+                        />
+                    </div>
+                ) : (
+                    // Desktop: 3D Carousel
+                    <div
+                        style={{
+                            position: 'relative',
+                            height: '500px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: isDragging ? 'grabbing' : 'grab',
+                            transformStyle: 'preserve-3d'
+                        }}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                        onMouseLeave={handleMouseUp}
+                    >
+                        <div style={{
+                            position: 'relative',
+                            width: '100%',
+                            height: '100%',
+                            transformStyle: 'preserve-3d',
+                            transform: `rotateY(${rotation}deg)`,
+                            transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.2, 0, 0.2, 1)'
+                        }}>
+                            {faces.map((faceProjects, faceIndex) => {
+                                const angle = anglePerFace * faceIndex;
+                                return (
+                                    <div
+                                        key={faceIndex}
+                                        className="project-face"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '50%',
+                                            top: '50%',
+                                            width: '640px',
+                                            height: '420px',
+                                            transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${radius}px)`,
+                                            display: 'flex',
+                                            gap: '40px',
+                                            justifyContent: 'center'
+                                        }}
+                                    >
+                                        {faceProjects.map((project, i) => (
+                                            <ProjectCard
+                                                key={i}
+                                                project={project}
+                                                index={faceIndex * projectsPerFace + i}
+                                                isMobile={false}
+                                            />
+                                        ))}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '40px' }} className="animate-slide-up delay-300">
+                    <button onClick={() => rotate('left')} className="btn btn-outline" style={{ padding: '10px 20px' }}>
+                        <FaChevronLeft />
+                    </button>
+                    <button onClick={() => rotate('right')} className="btn btn-outline" style={{ padding: '10px 20px' }}>
+                        <FaChevronRight />
+                    </button>
                 </div>
-                <div style={{ textAlign: 'center' }} className="animate-slide-up delay-300">
-                    <a href="https://github.com/MPrajwalKini?tab=repositories" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-                        <FaGithub /> View More on GitHub
-                    </a>
+
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {isMobile ? 'Use arrows to navigate projects' : 'Drag or use arrows to rotate the carousel'}
+                    </p>
                 </div>
             </div>
         </section>
@@ -107,3 +265,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

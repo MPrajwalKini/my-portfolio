@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Cursor from './components/Cursor';
 import ParticlesBackground from './components/ParticlesBackground';
+import MusicPlayer from './components/MusicPlayer';
 import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
@@ -22,6 +23,7 @@ function App() {
       <Projects />
       <Contact />
       <Footer />
+      <MusicPlayer />
     </div>
   );
 }
