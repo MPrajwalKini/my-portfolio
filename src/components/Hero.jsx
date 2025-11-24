@@ -12,6 +12,12 @@ const Hero = () => {
                 setIndex((prev) => prev + 1);
             }, 50);
             return () => clearTimeout(timeout);
+        } else {
+            const timeout = setTimeout(() => {
+                setIndex(0);
+                setText('');
+            }, 5000);
+            return () => clearTimeout(timeout);
         }
     }, [index]);
 
