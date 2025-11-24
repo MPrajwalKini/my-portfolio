@@ -56,9 +56,20 @@ const MusicPlayer = () => {
         {
             title: 'Bliss',
             artist: 'Lofi Hip Hop',
-            url: '/music/lofi hip hop beat - bliss.mp3'
+            url: '/music/bliss.mp3'
         }
     ];
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     useEffect(() => {
         if (audioRef.current) {
