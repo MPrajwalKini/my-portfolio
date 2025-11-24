@@ -56,7 +56,7 @@ const MusicPlayer = () => {
         {
             title: 'Bliss',
             artist: 'Lofi Hip Hop',
-            url: '/music/bliss - lofi hip hop beat.mp3'
+            url: '/music/lofi hip hop beat - bliss.mp3'
         }
     ];
 
