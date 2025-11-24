@@ -73,6 +73,34 @@ const Projects = () => {
     const [startRotation, setStartRotation] = useState(0);
     const [isMobile, setIsMobile] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+
+    // Minimum swipe distance (in px)
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null); // Reset touch end
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) {
+            rotate('right'); // Swipe left -> Go next (right)
+        } else if (isRightSwipe) {
+            rotate('left'); // Swipe right -> Go prev (left)
+        }
+    };
 
     useEffect(() => {
         const checkMobile = () => {
@@ -179,8 +207,13 @@ const Projects = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         minHeight: '420px',
-                        padding: '20px 0'
-                    }}>
+                        padding: '20px 0',
+                        touchAction: 'pan-y' // Allow vertical scrolling but capture horizontal swipes
+                    }}
+                        onTouchStart={onTouchStart}
+                        onTouchMove={onTouchMove}
+                        onTouchEnd={onTouchEnd}
+                    >
                         <ProjectCard
                             project={projects[currentIndex]}
                             index={currentIndex}

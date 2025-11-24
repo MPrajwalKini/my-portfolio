@@ -9,6 +9,34 @@ const MusicPlayer = () => {
     const [hasInteracted, setHasInteracted] = useState(false);
     const audioRef = useRef(null);
 
+    // Touch state for swipe detection
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientY);
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientY);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isSwipeUp = distance > minSwipeDistance;
+        const isSwipeDown = distance < -minSwipeDistance;
+
+        if (isSwipeUp) {
+            nextTrack();
+        } else if (isSwipeDown) {
+            prevTrack();
+        }
+    };
+
     const playlist = [
         {
             title: 'The Improv',
@@ -186,7 +214,10 @@ const MusicPlayer = () => {
                         }}>
                             <div
                                 onWheel={handleWheel}
-                                style={{ position: 'relative', height: '180px' }}
+                                onTouchStart={onTouchStart}
+                                onTouchMove={onTouchMove}
+                                onTouchEnd={onTouchEnd}
+                                style={{ position: 'relative', height: '180px', touchAction: 'none' }}
                             >
                                 {[...Array(3)].map((_, offset) => {
                                     const index = (currentTrack + offset - 1 + playlist.length) % playlist.length;
