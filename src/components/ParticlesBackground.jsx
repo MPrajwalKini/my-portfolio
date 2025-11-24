@@ -8,13 +8,20 @@ const ParticlesBackground = () => {
         const ctx = canvas.getContext('2d');
         let animationFrameId;
         let particles = [];
+        const mouse = { x: null, y: null };
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
 
+        const handleMouseMove = (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        };
+
         window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', handleMouseMove);
         resizeCanvas();
 
         class Particle {
@@ -25,6 +32,9 @@ const ParticlesBackground = () => {
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
                 this.color = 'rgba(0, 242, 255, 0.5)'; // Cyan
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
             }
 
             update() {
@@ -33,6 +43,24 @@ const ParticlesBackground = () => {
 
                 if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+                // Mouse interaction
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let forceDirectionX = dx / distance;
+                    let forceDirectionY = dy / distance;
+                    let maxDistance = 100;
+                    let force = (maxDistance - distance) / maxDistance;
+                    let directionX = forceDirectionX * force * this.density;
+                    let directionY = forceDirectionY * force * this.density;
+
+                    if (distance < maxDistance) {
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
             }
 
             draw() {
@@ -82,6 +110,7 @@ const ParticlesBackground = () => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('mousemove', handleMouseMove);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);

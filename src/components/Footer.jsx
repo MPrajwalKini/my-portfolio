@@ -4,11 +4,11 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 const Footer = () => {
     return (
         <footer style={{
-            background: 'rgba(5, 5, 5, 0.5)',
+            background: 'var(--glass-bg)',
             backdropFilter: 'blur(10px)',
             padding: '40px 0',
             textAlign: 'center',
-            borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+            borderTop: '1px solid var(--glass-border)',
             marginTop: '60px'
         }}>
             <div className="container">

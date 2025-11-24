@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap');
 
 :root {
+  /* Default Theme (Galaxy) */
   --bg-dark: #050505;
   --bg-secondary: #0a0a0a;
   --text-primary: #ffffff;
@@ -10,14 +11,67 @@
   --accent-secondary: #7000ff;
   /* Purple Neon */
   --glass-bg: rgba(255, 255, 255, 0.03);
-  /* More subtle */
   --glass-border: rgba(255, 255, 255, 0.05);
-  /* Very subtle border */
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Outfit', sans-serif;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --glow: 0 0 20px rgba(0, 242, 255, 0.15);
-  /* Soft ambient glow */
+  --heading-gradient-start: #ffffff;
+  --heading-gradient-end: #a5a5a5;
+  --grid-color: rgba(0, 242, 255, 0.05);
+  --hero-glow: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+
+  /* Component Specific Variables */
+  --card-bg: rgba(20, 20, 20, 0.9);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --tag-bg: rgba(255, 255, 255, 0.05);
+  --tag-border: rgba(255, 255, 255, 0.05);
+  --skill-bg: rgba(255, 255, 255, 0.03);
+  --skill-border: rgba(255, 255, 255, 0.05);
+  --skill-hover-bg: rgba(255, 255, 255, 0.08);
+  --number-color: rgba(255, 255, 255, 0.05);
+  --private-tag-color: rgba(255, 255, 255, 0.3);
+  --private-tag-border: rgba(255, 255, 255, 0.1);
+  --box-shadow-color: rgba(0, 242, 255, 0.05);
+  --mobile-menu-bg: rgba(5, 5, 5, 0.98);
+}
+
+[data-theme="solar"] {
+  /* Solar Theme (Light) */
+  --bg-dark: #fdf6e3;
+  /* Solarized Base3 */
+  --bg-secondary: #eee8d5;
+  /* Solarized Base2 */
+  --text-primary: #002b36;
+  /* Solarized Base03 */
+  --text-secondary: #586e75;
+  /* Solarized Base01 */
+  --accent-primary: #d33682;
+  /* Magenta */
+  --accent-secondary: #b58900;
+  /* Yellow */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  /* More opaque for contrast */
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glow: 0 0 20px rgba(211, 54, 130, 0.15);
+  --heading-gradient-start: #002b36;
+  --heading-gradient-end: #586e75;
+  --grid-color: rgba(211, 54, 130, 0.05);
+  --hero-glow: radial-gradient(circle, rgba(211, 54, 130, 0.1) 0%, transparent 70%);
+
+  /* Component Specific Variables */
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --tag-bg: rgba(0, 0, 0, 0.05);
+  --tag-border: rgba(0, 0, 0, 0.1);
+  --skill-bg: rgba(255, 255, 255, 0.5);
+  --skill-border: rgba(0, 0, 0, 0.05);
+  --skill-hover-bg: rgba(255, 255, 255, 0.8);
+  --number-color: rgba(0, 0, 0, 0.05);
+  --private-tag-color: rgba(0, 0, 0, 0.4);
+  --private-tag-border: rgba(0, 0, 0, 0.1);
+  --box-shadow-color: rgba(0, 0, 0, 0.05);
+  --mobile-menu-bg: rgba(253, 246, 227, 0.98);
 }
 
 * {
@@ -138,8 +192,8 @@ html {
   width: 100vw;
   height: 100vh;
   background-image:
-    linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 50px 50px;
   perspective: 500px;
   transform-style: preserve-3d;

@@ -13,27 +13,28 @@ const SkillCategory = ({ title, skills, delay }) => (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
             {skills.map((skill, index) => (
                 <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--skill-bg)',
                     padding: '10px 16px',
                     borderRadius: '12px',
                     fontSize: '0.95rem',
-                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    border: '1px solid var(--skill-border)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    transition: 'all 0.2s ease'
+                    transition: 'all 0.2s ease',
+                    color: 'var(--text-primary)'
                 }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                        e.currentTarget.style.background = 'var(--skill-hover-bg)';
                         e.currentTarget.style.borderColor = 'var(--accent-primary)';
                         e.currentTarget.querySelector('.skill-icon').style.color = 'var(--accent-primary)';
                     }}
                     onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                        e.currentTarget.style.background = 'var(--skill-bg)';
+                        e.currentTarget.style.borderColor = 'var(--skill-border)';
                         e.currentTarget.querySelector('.skill-icon').style.color = 'inherit';
                     }}>
-                    <span className="skill-icon" style={{ fontSize: '1.1rem', transition: 'color 0.2s' }}>{skill.icon}</span>
+                    <span className="skill-icon" style={{ fontSize: '1.1rem', transition: 'color 0.2s', color: 'var(--text-primary)' }}>{skill.icon}</span>
                     {skill.name}
                 </div>
             ))}

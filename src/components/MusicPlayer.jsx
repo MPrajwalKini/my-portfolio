@@ -156,10 +156,10 @@ const MusicPlayer = () => {
                         width: '60px',
                         height: '60px',
                         borderRadius: '50%',
-                        background: 'rgba(20, 20, 20, 0.9)',
+                        background: 'var(--card-bg)',
                         backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(0, 242, 255, 0.3)',
-                        boxShadow: '0 0 20px rgba(0, 242, 255, 0.2)',
+                        border: '1px solid var(--card-border)',
+                        boxShadow: '0 0 20px var(--box-shadow-color)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -181,12 +181,12 @@ const MusicPlayer = () => {
                         bottom: '30px',
                         right: '30px',
                         width: '320px',
-                        background: 'rgba(20, 20, 20, 0.95)',
+                        background: 'var(--card-bg)',
                         backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(0, 242, 255, 0.3)',
+                        border: '1px solid var(--card-border)',
                         borderRadius: '16px',
                         padding: '20px',
-                        boxShadow: '0 8px 32px rgba(0, 242, 255, 0.15)',
+                        boxShadow: '0 8px 32px var(--box-shadow-color)',
                         zIndex: 1000,
                         animation: 'slideUp 0.3s ease'
                     }}
@@ -195,11 +195,11 @@ const MusicPlayer = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <FaMusic style={{ color: 'var(--accent-primary)', fontSize: '18px' }} />
-                            <span style={{ fontSize: '14px', fontWeight: '600', letterSpacing: '1px' }}>NOW PLAYING</span>
+                            <span style={{ fontSize: '14px', fontWeight: '600', letterSpacing: '1px', color: 'var(--text-primary)' }}>NOW PLAYING</span>
                         </div>
                         <FaTimes
                             onClick={() => setIsOpen(false)}
-                            style={{ cursor: 'pointer', fontSize: '18px', opacity: 0.7, transition: 'opacity 0.3s' }}
+                            style={{ cursor: 'pointer', fontSize: '18px', opacity: 0.7, transition: 'opacity 0.3s', color: 'var(--text-primary)' }}
                             onMouseEnter={(e) => e.target.style.opacity = 1}
                             onMouseLeave={(e) => e.target.style.opacity = 0.7}
                         />
@@ -207,9 +207,9 @@ const MusicPlayer = () => {
 
                     <div style={{ marginBottom: '20px' }}>
                         <div style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
+                            background: 'var(--tag-bg)',
                             borderRadius: '8px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid var(--tag-border)',
                             overflow: 'hidden'
                         }}>
                             <div
@@ -238,8 +238,8 @@ const MusicPlayer = () => {
                                                 right: 0,
                                                 padding: '15px',
                                                 cursor: offset !== 1 ? 'pointer' : 'default',
-                                                background: isActive ? 'rgba(0, 242, 255, 0.1)' : 'transparent',
-                                                borderBottom: offset < 2 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                                                background: isActive ? 'var(--skill-hover-bg)' : 'transparent',
+                                                borderBottom: offset < 2 ? '1px solid var(--tag-border)' : 'none',
                                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                                 opacity: isActive ? 1 : 0.5,
                                                 transform: isActive ? 'scale(1)' : 'scale(0.95)',
@@ -256,7 +256,8 @@ const MusicPlayer = () => {
                                                     <div style={{
                                                         fontSize: isActive ? '16px' : '14px',
                                                         fontWeight: isActive ? '600' : '500',
-                                                        transition: 'all 0.3s'
+                                                        transition: 'all 0.3s',
+                                                        color: 'var(--text-primary)'
                                                     }}>
                                                         {track.title}
                                                     </div>
@@ -293,7 +294,7 @@ const MusicPlayer = () => {
                             style={{
                                 background: 'transparent',
                                 border: 'none',
-                                color: 'white',
+                                color: 'var(--text-primary)',
                                 cursor: 'pointer',
                                 fontSize: '20px',
                                 opacity: 0.8,
@@ -312,14 +313,14 @@ const MusicPlayer = () => {
                                 borderRadius: '50%',
                                 background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
                                 border: 'none',
-                                color: 'black',
+                                color: 'white', // Keep play button icon white as it's on a gradient
                                 cursor: 'pointer',
                                 fontSize: '20px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 transition: 'all 0.3s',
-                                boxShadow: '0 4px 15px rgba(0, 242, 255, 0.3)'
+                                boxShadow: '0 4px 15px var(--box-shadow-color)'
                             }}
                             className="play-btn"
                         >
@@ -331,7 +332,7 @@ const MusicPlayer = () => {
                             style={{
                                 background: 'transparent',
                                 border: 'none',
-                                color: 'white',
+                                color: 'var(--text-primary)',
                                 cursor: 'pointer',
                                 fontSize: '20px',
                                 opacity: 0.8,

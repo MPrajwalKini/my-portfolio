@@ -1,34 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { FaGithub, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import ProjectModal from './ProjectModal';
 
-const ProjectCard = ({ project, index, isMobile }) => {
-    const cardContent = (
-        <div className="glass-card project-card-link" style={{
-            width: isMobile ? '100%' : '300px',
-            height: isMobile ? 'auto' : '420px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: isMobile ? '20px' : '25px',
-            background: 'rgba(20, 20, 20, 0.9)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 0 20px rgba(0, 242, 255, 0.05)',
-            transformStyle: 'preserve-3d',
-            backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)',
-            transition: 'all 0.3s ease',
-            cursor: project.repoUrl ? 'pointer' : 'default'
-        }}>
+const ProjectCard = ({ project, index, isMobile, onSelect }) => {
+    return (
+        <div className="glass-card project-card-link"
+            onClick={() => onSelect(project)}
+            style={{
+                width: isMobile ? '100%' : '300px',
+                height: isMobile ? 'auto' : '420px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                padding: isMobile ? '20px' : '25px',
+                background: 'var(--card-bg)',
+                border: '1px solid var(--card-border)',
+                boxShadow: '0 0 20px rgba(0, 242, 255, 0.05)',
+                transformStyle: 'preserve-3d',
+                backfaceVisibility: 'hidden',
+                transform: 'translateZ(0)',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer'
+            }}>
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                    <span style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: '800', color: 'rgba(255,255,255,0.05)', lineHeight: 1 }}>0{index + 1}</span>
-                    {project.repoUrl ? (
-                        <FaGithub style={{ fontSize: isMobile ? '1.2rem' : '1.4rem', color: 'var(--text-secondary)' }} />
-                    ) : (
-                        <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '4px 8px', borderRadius: '4px', letterSpacing: '1px' }}>PRIVATE</span>
-                    )}
+                    <span style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: '800', color: 'var(--number-color)', lineHeight: 1 }}>0{index + 1}</span>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        {project.repoUrl ? (
+                            <a
+                                href={project.repoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                    fontSize: isMobile ? '1.2rem' : '1.4rem',
+                                    color: 'var(--text-secondary)',
+                                    transition: 'color 0.3s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.color = 'var(--accent-primary)'}
+                                onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}
+                            >
+                                <FaGithub />
+                            </a>
+                        ) : (
+                            <span style={{ fontSize: '0.7rem', color: 'var(--private-tag-color)', border: '1px solid var(--private-tag-border)', padding: '4px 8px', borderRadius: '4px', letterSpacing: '1px' }}>PRIVATE</span>
+                        )}
+                    </div>
                 </div>
-                <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '10px', lineHeight: 1.1, wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
+                <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '10px', lineHeight: 1.1, wordWrap: 'break-word', overflowWrap: 'break-word', color: 'var(--text-primary)' }}>{project.title}</h3>
                 <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--accent-primary)', display: 'block', marginBottom: '15px', wordWrap: 'break-word' }}>{project.type}</span>
                 <p style={{ color: 'var(--text-secondary)', fontSize: isMobile ? '0.8rem' : '0.85rem', lineHeight: 1.6, marginBottom: '15px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.description}</p>
             </div>
@@ -37,11 +56,11 @@ const ProjectCard = ({ project, index, isMobile }) => {
                 {project.tags.map((tag, i) => (
                     <span key={i} style={{
                         fontSize: '0.7rem',
-                        color: 'rgba(255,255,255,0.8)',
-                        background: 'rgba(255, 255, 255, 0.05)',
+                        color: 'var(--text-primary)',
+                        background: 'var(--tag-bg)',
                         padding: '4px 8px',
                         borderRadius: '4px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                        border: '1px solid var(--tag-border)'
                     }}>
                         {tag}
                     </span>
@@ -49,21 +68,6 @@ const ProjectCard = ({ project, index, isMobile }) => {
             </div>
         </div>
     );
-
-    if (project.repoUrl) {
-        return (
-            <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-                {cardContent}
-            </a>
-        );
-    }
-
-    return cardContent;
 };
 
 const Projects = () => {
@@ -75,6 +79,7 @@ const Projects = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState(null);
     const [touchEnd, setTouchEnd] = useState(null);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     // Minimum swipe distance (in px)
     const minSwipeDistance = 50;
@@ -197,6 +202,8 @@ const Projects = () => {
 
     return (
         <section id="projects" style={{ overflow: 'hidden' }}>
+            <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+
             <div className="container" style={{ perspective: isMobile ? 'none' : '2500px' }}>
                 <h2 className="animate-slide-up" style={{ textAlign: 'center', marginBottom: '60px' }}>Featured <span className="text-gradient">Projects</span></h2>
 
@@ -218,6 +225,7 @@ const Projects = () => {
                             project={projects[currentIndex]}
                             index={currentIndex}
                             isMobile={true}
+                            onSelect={setSelectedProject}
                         />
                     </div>
                 ) : (
@@ -269,6 +277,7 @@ const Projects = () => {
                                                 project={project}
                                                 index={faceIndex * projectsPerFace + i}
                                                 isMobile={false}
+                                                onSelect={setSelectedProject}
                                             />
                                         ))}
                                     </div>
@@ -298,4 +307,3 @@ const Projects = () => {
 };
 
 export default Projects;
-

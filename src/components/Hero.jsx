@@ -42,12 +42,13 @@ const Hero = () => {
                 transform: 'translate(-50%, -50%)',
                 width: '600px',
                 height: '600px',
-                background: 'radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%)',
+                background: 'var(--hero-glow)',
                 filter: 'blur(60px)',
-                zIndex: 0
+                zIndex: 0,
+                pointerEvents: 'none'
             }}></div>
 
-            <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
                 <h2 className="animate-slide-up" style={{
                     fontSize: 'clamp(1.5rem, 5vw, 2rem)',
                     letterSpacing: '2px',
@@ -61,10 +62,13 @@ const Hero = () => {
                     fontWeight: '800',
                     marginBottom: '20px',
                     lineHeight: 1.1,
-                    background: 'linear-gradient(to right, #fff, #a5a5a5)',
+                    background: 'linear-gradient(to right, var(--heading-gradient-start), var(--heading-gradient-end))',
                     backgroundClip: 'text',
                     WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    WebkitTextFillColor: 'transparent',
+                    color: 'var(--text-primary)', // Fallback
+                    position: 'relative',
+                    zIndex: 20
                 }}>
                     M PRAJWAL KINI
                 </h1>
