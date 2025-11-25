@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaMusic, FaPlay, FaPause, FaStepForward, FaStepBackward, FaVolumeUp, FaTimes } from 'react-icons/fa';
 
-const MusicPlayer = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const MusicPlayer = ({ isOpen, onToggle }) => {
+    // const [isOpen, setIsOpen] = useState(false); // Removed internal state
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrack, setCurrentTrack] = useState(0);
     const [volume, setVolume] = useState(0.5);
@@ -159,7 +159,7 @@ const MusicPlayer = () => {
 
             {!isOpen && (
                 <div
-                    onClick={() => setIsOpen(true)}
+                    onClick={onToggle}
                     style={{
                         position: 'fixed',
                         bottom: '30px',
@@ -198,7 +198,7 @@ const MusicPlayer = () => {
                         borderRadius: '16px',
                         padding: '20px',
                         boxShadow: '0 8px 32px var(--box-shadow-color)',
-                        zIndex: 1000,
+                        zIndex: 1002,
                         animation: 'slideUp 0.3s ease'
                     }}
                     className="music-player-expanded"
@@ -209,7 +209,7 @@ const MusicPlayer = () => {
                             <span style={{ fontSize: '14px', fontWeight: '600', letterSpacing: '1px', color: 'var(--text-primary)' }}>NOW PLAYING</span>
                         </div>
                         <FaTimes
-                            onClick={() => setIsOpen(false)}
+                            onClick={onToggle}
                             style={{ cursor: 'pointer', fontSize: '18px', opacity: 0.7, transition: 'opacity 0.3s', color: 'var(--text-primary)' }}
                             onMouseEnter={(e) => e.target.style.opacity = 1}
                             onMouseLeave={(e) => e.target.style.opacity = 0.7}
