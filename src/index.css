@@ -744,9 +744,9 @@ section {
   right: 30px;
   width: 380px;
   height: 550px;
-  background: rgba(5, 5, 5, 0.9);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--accent-primary);
+  border: 1px solid var(--card-border);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -755,7 +755,7 @@ section {
   transform: scale(0) translateY(50px);
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  box-shadow: 0 0 30px rgba(0, 242, 255, 0.15), inset 0 0 20px rgba(0, 242, 255, 0.05);
+  box-shadow: 0 8px 32px var(--box-shadow-color);
   overflow: hidden;
   clip-path: polygon(0 0,
       100% 0,
@@ -773,8 +773,8 @@ section {
 /* HUD Header */
 .hud-header {
   padding: 15px;
-  background: rgba(0, 242, 255, 0.05);
-  border-bottom: 1px solid var(--accent-primary);
+  background: var(--tag-bg);
+  border-bottom: 1px solid var(--card-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -809,10 +809,6 @@ section {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
 }
 
 .hud-messages {
@@ -844,12 +840,15 @@ section {
 .agent-avatar {
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  flex-shrink: 0;
   background: var(--accent-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
+  color: var(--bg-primary);
   font-size: 14px;
   box-shadow: 0 0 10px var(--accent-primary);
 }
@@ -863,17 +862,17 @@ section {
 }
 
 .hud-message.agent .message-bubble {
-  background: rgba(0, 242, 255, 0.1);
-  border: 1px solid rgba(0, 242, 255, 0.3);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   color: var(--text-primary);
   border-top-left-radius: 0;
 }
 
 .hud-message.user .message-bubble {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--bg-primary);
   border-top-right-radius: 0;
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+  box-shadow: 0 0 15px var(--accent-primary);
 }
 
 /* Quick Actions */
@@ -886,8 +885,8 @@ section {
 }
 
 .hud-quick-actions button {
-  background: rgba(0, 242, 255, 0.05);
-  border: 1px solid var(--accent-primary);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   color: var(--accent-primary);
   padding: 5px 12px;
   border-radius: 20px;
@@ -899,15 +898,15 @@ section {
 
 .hud-quick-actions button:hover {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--bg-primary);
   box-shadow: 0 0 10px var(--accent-primary);
 }
 
 /* Input Area */
 .hud-input-area {
   padding: 15px;
-  border-top: 1px solid var(--accent-primary);
-  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--card-border);
+  background: var(--tag-bg);
   display: flex;
   gap: 10px;
   align-items: center;
@@ -918,8 +917,8 @@ section {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 242, 255, 0.05);
-  border: 1px solid rgba(0, 242, 255, 0.3);
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
   padding: 8px 12px;
   border-radius: 4px;
 }
@@ -933,14 +932,14 @@ section {
   flex: 1;
   background: transparent;
   border: none;
-  color: #fff;
+  color: var(--text-primary);
   font-family: 'Space Grotesk', monospace;
   font-size: 0.9rem;
 }
 
 .send-btn {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--bg-primary);
   border: none;
   width: 35px;
   height: 35px;
