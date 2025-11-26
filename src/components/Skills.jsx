@@ -18,6 +18,7 @@ const SkillCard = ({ skill }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '12px',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: isHovered ? 'translateY(-5px) scale(1.02)' : 'translateY(0) scale(1)',
@@ -25,7 +26,9 @@ const SkillCard = ({ skill }) => {
                     ? '0 8px 32px rgba(0, 242, 255, 0.3), 0 0 0 1px rgba(0, 242, 255, 0.1)'
                     : '0 4px 20px rgba(0, 0, 0, 0.1)',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                height: '100%',
+                minHeight: '160px'
             }}
         >
             {/* Animated background gradient on hover */}
@@ -170,7 +173,8 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                         <div
                             key={skill.name}
                             style={{
-                                animation: isExpanded ? `slideUp 0.4s ease-out ${index * 0.05}s both` : 'none'
+                                animation: isExpanded ? `slideUp 0.4s ease-out ${index * 0.05}s both` : 'none',
+                                height: '100%'
                             }}
                         >
                             <SkillCard skill={skill} />

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
 
-const Navbar = () => {
+const Navbar = ({ theme, toggleTheme }) => {
     const [scrolled, setScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [theme, setTheme] = useState('galaxy');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -12,20 +11,8 @@ const Navbar = () => {
         };
         window.addEventListener('scroll', handleScroll);
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'galaxy';
-        setTheme(savedTheme);
-        document.documentElement.setAttribute('data-theme', savedTheme);
-
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    const toggleTheme = () => {
-        const newTheme = theme === 'galaxy' ? 'solar' : 'galaxy';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-    };
 
     const toggleMenu = () => setIsOpen(!isOpen);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
-const Footer = () => {
+const Footer = ({ theme }) => {
     return (
         <footer style={{
             background: 'var(--glass-bg)',
@@ -24,7 +24,7 @@ const Footer = () => {
                     </a>
                 </div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                    &copy; {new Date().getFullYear()} M Prajwal Kini. Built with React & Galaxy Vibes.
+                    &copy; {new Date().getFullYear()} M Prajwal Kini. Built with React & {theme === 'galaxy' ? 'Galaxy' : 'Solar'} Vibes.
                 </p>
             </div>
         </footer>

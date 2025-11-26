@@ -14,6 +14,21 @@ import './App.css'; // We can keep this for App-specific styles if needed, or re
 
 function App() {
   const [activeModal, setActiveModal] = React.useState('none'); // 'none', 'agent', 'music'
+  const [theme, setTheme] = React.useState('galaxy');
+
+  React.useEffect(() => {
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'galaxy';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'galaxy' ? 'solar' : 'galaxy';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   const toggleAgent = () => {
     setActiveModal(prev => prev === 'agent' ? 'none' : 'agent');
@@ -27,13 +42,13 @@ function App() {
     <div className="app">
       <Cursor />
       <ParticlesBackground />
-      <Navbar />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero />
       <About />
       <Skills />
       <Projects />
       <Contact />
-      <Footer />
+      <Footer theme={theme} />
       <MusicPlayer
         isOpen={activeModal === 'music'}
         onToggle={toggleMusic}
