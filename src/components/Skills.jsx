@@ -190,7 +190,6 @@ const Skills = () => {
             title: 'Frontend Development',
             icon: <FaCode />,
             skills: [
-                { name: 'React', icon: <FaReact /> },
                 { name: 'JavaScript', icon: <SiJavascript /> },
                 { name: 'Tailwind CSS', icon: <SiTailwindcss /> }
             ]
@@ -200,7 +199,6 @@ const Skills = () => {
             icon: <FaServer />,
             skills: [
                 { name: 'Python', icon: <FaPython /> },
-                { name: 'Node.js', icon: <FaNodeJs /> },
                 { name: 'API Design', icon: <FaServer /> }
             ]
         },
@@ -218,7 +216,6 @@ const Skills = () => {
             title: 'Emerging Technologies',
             icon: <FaRobot />,
             skills: [
-                { name: 'AI/ML', icon: <FaRobot /> },
                 { name: 'Automation', icon: <FaCode /> }
             ]
         }
