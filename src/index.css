@@ -203,6 +203,17 @@ html {
   background: var(--accent-secondary);
 }
 
+/* Mobile Scrollbar Styling */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+  }
+}
+
 /* Dynamic Grid Background */
 .grid-bg {
   position: fixed;
@@ -609,6 +620,12 @@ section {
   width: 6px;
 }
 
+@media (max-width: 768px) {
+  .playlist-dropdown::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
 .playlist-dropdown::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
@@ -787,6 +804,15 @@ section {
 .agent-hud.open {
   transform: scale(1) translateY(0);
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .agent-hud {
+    width: 90%;
+    right: 5%;
+    bottom: 90px;
+    height: 60vh;
+  }
 }
 
 /* HUD Header */
