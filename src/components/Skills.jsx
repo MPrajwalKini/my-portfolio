@@ -84,7 +84,7 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
             <div
                 onClick={onToggle}
                 style={{
-                    padding: '25px 30px',
+                    padding: '20px',
                     cursor: 'pointer',
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -105,7 +105,7 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                     </div>
                     <div>
                         <h3 style={{
-                            fontSize: '1.3rem',
+                            fontSize: '1.1rem',
                             margin: 0,
                             color: 'var(--text-primary)',
                             fontWeight: '600'
@@ -113,7 +113,7 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                             {category.title}
                         </h3>
                         <p style={{
-                            fontSize: '0.85rem',
+                            fontSize: '0.8rem',
                             margin: '5px 0 0 0',
                             color: 'var(--text-secondary)'
                         }}>
@@ -136,15 +136,18 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                 maxHeight: isExpanded ? '1000px' : '0',
                 overflow: 'hidden',
                 transition: 'max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                padding: isExpanded ? '25px 30px' : '0 30px'
+                padding: isExpanded ? '20px' : '0 20px'
             }}>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-                    gap: '20px',
-                    opacity: isExpanded ? 1 : 0,
-                    transition: 'opacity 0.3s'
-                }}>
+                <div
+                    className="skill-cards-grid"
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                        gap: '15px',
+                        opacity: isExpanded ? 1 : 0,
+                        transition: 'opacity 0.3s'
+                    }}
+                >
                     {category.skills.map((skill, index) => (
                         <div
                             key={skill.name}
@@ -235,13 +238,16 @@ const Skills = () => {
                     </p>
                 </div>
 
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                    gap: '25px',
-                    maxWidth: '1200px',
-                    margin: '0 auto'
-                }}>
+                <div
+                    className="skills-categories-grid"
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(min(400px, 100%), 1fr))',
+                        gap: '25px',
+                        maxWidth: '1200px',
+                        margin: '0 auto'
+                    }}
+                >
                     {categories.map((category, index) => (
                         <div
                             key={category.title}

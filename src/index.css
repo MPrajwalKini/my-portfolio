@@ -329,6 +329,27 @@ h6 {
   .mobile-menu-btn {
     display: block !important;
   }
+
+  /* Skills Section Mobile Adjustments */
+  #skills h2 {
+    font-size: 1.8rem !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  #skills p {
+    font-size: 0.9rem !important;
+  }
+
+  /* Force single column for category cards on mobile */
+  .skills-categories-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Force single column for skill cards on mobile */
+  .skill-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (min-width: 769px) {
