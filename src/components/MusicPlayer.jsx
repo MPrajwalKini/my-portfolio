@@ -155,7 +155,7 @@ const MusicPlayer = ({ isOpen, onToggle }) => {
 
     return (
         <>
-            <audio ref={audioRef} loop onEnded={nextTrack} />
+            <audio ref={audioRef} onEnded={nextTrack} />
 
             {!isOpen && (
                 <div

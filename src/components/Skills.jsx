@@ -1,81 +1,259 @@
-import React from 'react';
-import { FaPython, FaRobot, FaSnowflake, FaDatabase, FaServer, FaSync, FaCloud, FaCogs } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaPython, FaReact, FaNodeJs, FaDatabase, FaCloud, FaRobot, FaCode, FaServer, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { SiJavascript, SiTailwindcss, SiSnowflake, SiPostgresql } from 'react-icons/si';
 
-const SkillCategory = ({ title, skills, delay }) => (
-    <div className="glass-card animate-slide-up" style={{
-        padding: '30px',
-        animationDelay: `${delay}s`,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px'
-    }}>
-        <h3 style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '10px' }}>{title}</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {skills.map((skill, index) => (
-                <div key={index} style={{
-                    background: 'var(--skill-bg)',
-                    padding: '10px 16px',
-                    borderRadius: '12px',
-                    fontSize: '0.95rem',
-                    border: '1px solid var(--skill-border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    transition: 'all 0.2s ease',
-                    color: 'var(--text-primary)'
-                }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'var(--skill-hover-bg)';
-                        e.currentTarget.style.borderColor = 'var(--accent-primary)';
-                        e.currentTarget.querySelector('.skill-icon').style.color = 'var(--accent-primary)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'var(--skill-bg)';
-                        e.currentTarget.style.borderColor = 'var(--skill-border)';
-                        e.currentTarget.querySelector('.skill-icon').style.color = 'inherit';
-                    }}>
-                    <span className="skill-icon" style={{ fontSize: '1.1rem', transition: 'color 0.2s', color: 'var(--text-primary)' }}>{skill.icon}</span>
-                    {skill.name}
-                </div>
-            ))}
+const SkillCard = ({ skill }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{
+                background: 'var(--glass-bg)',
+                backdropFilter: 'blur(10px)',
+                border: '2px solid var(--glass-border)',
+                borderRadius: '16px',
+                padding: '20px 15px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '12px',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                transform: isHovered ? 'translateY(-5px) scale(1.02)' : 'translateY(0) scale(1)',
+                boxShadow: isHovered
+                    ? '0 8px 32px rgba(0, 242, 255, 0.3), 0 0 0 1px rgba(0, 242, 255, 0.1)'
+                    : '0 4px 20px rgba(0, 0, 0, 0.1)',
+                position: 'relative',
+                overflow: 'hidden'
+            }}
+        >
+            {/* Animated background gradient on hover */}
+            <div style={{
+                position: 'absolute',
+                top: '-50%',
+                left: '-50%',
+                width: '200%',
+                height: '200%',
+                background: 'radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%)',
+                opacity: isHovered ? 1 : 0,
+                transition: 'opacity 0.4s',
+                pointerEvents: 'none',
+                animation: isHovered ? 'pulse-glow 2s infinite' : 'none'
+            }} />
+
+            {/* Icon */}
+            <div style={{
+                fontSize: '2.5rem',
+                color: 'var(--text-primary)',
+                transition: 'all 0.3s',
+                filter: isHovered ? 'drop-shadow(0 0 10px var(--accent-primary))' : 'none',
+                transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1) rotate(0deg)',
+                zIndex: 1
+            }}>
+                {skill.icon}
+            </div>
+
+            {/* Skill Name */}
+            <h3 style={{
+                fontSize: '1rem',
+                fontWeight: '600',
+                color: isHovered ? 'var(--accent-primary)' : 'var(--text-primary)',
+                margin: 0,
+                transition: 'color 0.3s',
+                zIndex: 1,
+                textAlign: 'center'
+            }}>
+                {skill.name}
+            </h3>
         </div>
-    </div>
-);
+    );
+};
+
+const SkillCategory = ({ category, isExpanded, onToggle }) => {
+    return (
+        <div style={{
+            background: 'var(--glass-bg)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid var(--glass-border)',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            transition: 'all 0.3s'
+        }}>
+            {/* Category Header */}
+            <div
+                onClick={onToggle}
+                style={{
+                    padding: '25px 30px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    background: isExpanded ? 'var(--skill-hover-bg)' : 'transparent',
+                    transition: 'all 0.3s',
+                    borderBottom: isExpanded ? '1px solid var(--glass-border)' : 'none'
+                }}
+            >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{
+                        fontSize: '1.5rem',
+                        color: 'var(--accent-primary)',
+                        transition: 'transform 0.3s',
+                        transform: isExpanded ? 'scale(1.1)' : 'scale(1)'
+                    }}>
+                        {category.icon}
+                    </div>
+                    <div>
+                        <h3 style={{
+                            fontSize: '1.3rem',
+                            margin: 0,
+                            color: 'var(--text-primary)',
+                            fontWeight: '600'
+                        }}>
+                            {category.title}
+                        </h3>
+                        <p style={{
+                            fontSize: '0.85rem',
+                            margin: '5px 0 0 0',
+                            color: 'var(--text-secondary)'
+                        }}>
+                            {category.skills.length} skills
+                        </p>
+                    </div>
+                </div>
+                <div style={{
+                    fontSize: '1.2rem',
+                    color: 'var(--accent-primary)',
+                    transition: 'transform 0.3s',
+                    transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
+                }}>
+                    <FaChevronDown />
+                </div>
+            </div>
+
+            {/* Expandable Content */}
+            <div style={{
+                maxHeight: isExpanded ? '1000px' : '0',
+                overflow: 'hidden',
+                transition: 'max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                padding: isExpanded ? '25px 30px' : '0 30px'
+            }}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                    gap: '20px',
+                    opacity: isExpanded ? 1 : 0,
+                    transition: 'opacity 0.3s'
+                }}>
+                    {category.skills.map((skill, index) => (
+                        <div
+                            key={skill.name}
+                            style={{
+                                animation: isExpanded ? `slideUp 0.4s ease-out ${index * 0.05}s both` : 'none'
+                            }}
+                        >
+                            <SkillCard skill={skill} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Skills = () => {
+    const [expandedCategories, setExpandedCategories] = useState([0]); // First category expanded by default
+
     const categories = [
         {
-            title: "Development",
+            title: 'Frontend Development',
+            icon: <FaCode />,
+            skills: [
+                { name: 'React', icon: <FaReact /> },
+                { name: 'JavaScript', icon: <SiJavascript /> },
+                { name: 'Tailwind CSS', icon: <SiTailwindcss /> }
+            ]
+        },
+        {
+            title: 'Backend Development',
+            icon: <FaServer />,
             skills: [
                 { name: 'Python', icon: <FaPython /> },
-                { name: 'API Integration', icon: <FaServer /> }
+                { name: 'Node.js', icon: <FaNodeJs /> },
+                { name: 'API Design', icon: <FaServer /> }
             ]
         },
         {
-            title: "Data & Cloud",
+            title: 'Data & Cloud',
+            icon: <FaCloud />,
             skills: [
-                { name: 'Snowflake', icon: <FaSnowflake /> },
-                { name: 'IDMC (Informatica)', icon: <FaDatabase /> },
-                { name: 'Cloud Deployment', icon: <FaCloud /> }
+                { name: 'Snowflake', icon: <SiSnowflake /> },
+                { name: 'SQL', icon: <SiPostgresql /> },
+                { name: 'Cloud Services', icon: <FaCloud /> },
+                { name: 'Database', icon: <FaDatabase /> }
             ]
         },
         {
-            title: "DevOps & Automation",
+            title: 'Emerging Technologies',
+            icon: <FaRobot />,
             skills: [
-                { name: 'Automation', icon: <FaRobot /> },
-                { name: 'CI/CD Pipelines', icon: <FaSync /> },
-                { name: 'Data Operations', icon: <FaCogs /> }
+                { name: 'AI/ML', icon: <FaRobot /> },
+                { name: 'Automation', icon: <FaCode /> }
             ]
         }
     ];
 
+    const toggleCategory = (index) => {
+        setExpandedCategories(prev =>
+            prev.includes(index)
+                ? prev.filter(i => i !== index)
+                : [...prev, index]
+        );
+    };
+
     return (
-        <section id="skills">
+        <section id="skills" style={{
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            position: 'relative',
+            padding: '100px 0'
+        }}>
             <div className="container">
-                <h2 className="animate-slide-up" style={{ textAlign: 'center', marginBottom: '60px' }}>Technical <span className="text-gradient">Skills</span></h2>
-                <div className="bento-grid">
+                <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                    <h2 className="animate-slide-up" style={{ marginBottom: '15px' }}>
+                        Technical <span className="text-gradient">Skills</span>
+                    </h2>
+                    <p style={{
+                        color: 'var(--text-secondary)',
+                        fontSize: '1rem',
+                        maxWidth: '600px',
+                        margin: '0 auto'
+                    }}>
+                        Click on a category to expand and explore my skills
+                    </p>
+                </div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                    gap: '25px',
+                    maxWidth: '1200px',
+                    margin: '0 auto'
+                }}>
                     {categories.map((category, index) => (
-                        <SkillCategory key={index} title={category.title} skills={category.skills} delay={index * 0.1} />
+                        <div
+                            key={category.title}
+                            className="animate-slide-up"
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                            <SkillCategory
+                                category={category}
+                                isExpanded={expandedCategories.includes(index)}
+                                onToggle={() => toggleCategory(index)}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>
