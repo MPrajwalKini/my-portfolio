@@ -87,45 +87,63 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                     padding: '20px',
                     cursor: 'pointer',
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    flexDirection: 'column',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     background: isExpanded ? 'var(--skill-hover-bg)' : 'transparent',
                     transition: 'all 0.3s',
-                    borderBottom: isExpanded ? '1px solid var(--glass-border)' : 'none'
+                    borderBottom: isExpanded ? '1px solid var(--glass-border)' : 'none',
+                    position: 'relative'
                 }}
             >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={{
-                        fontSize: '1.5rem',
-                        color: 'var(--accent-primary)',
-                        transition: 'transform 0.3s',
-                        transform: isExpanded ? 'scale(1.1)' : 'scale(1)'
-                    }}>
-                        {category.icon}
-                    </div>
-                    <div>
-                        <h3 style={{
-                            fontSize: '1.1rem',
-                            margin: 0,
-                            color: 'var(--text-primary)',
-                            fontWeight: '600'
-                        }}>
-                            {category.title}
-                        </h3>
-                        <p style={{
-                            fontSize: '0.8rem',
-                            margin: '5px 0 0 0',
-                            color: 'var(--text-secondary)'
-                        }}>
-                            {category.skills.length} skills
-                        </p>
-                    </div>
-                </div>
+                {/* Icon */}
                 <div style={{
-                    fontSize: '1.2rem',
+                    fontSize: '1.5rem',
                     color: 'var(--accent-primary)',
                     transition: 'transform 0.3s',
-                    transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
+                    transform: isExpanded ? 'scale(1.1)' : 'scale(1)',
+                    marginBottom: '10px'
+                }}>
+                    {category.icon}
+                </div>
+
+                {/* Title and Skill Count */}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '2px'
+                }}>
+                    <h3 style={{
+                        fontSize: '1.1rem',
+                        margin: 0,
+                        color: 'var(--text-primary)',
+                        fontWeight: '600',
+                        lineHeight: '1.3',
+                        textAlign: 'center'
+                    }}>
+                        {category.title}
+                    </h3>
+                    <p style={{
+                        fontSize: '0.8rem',
+                        margin: 0,
+                        color: 'var(--text-secondary)',
+                        lineHeight: '1.2',
+                        textAlign: 'center'
+                    }}>
+                        {category.skills.length} skills
+                    </p>
+                </div>
+
+                {/* Chevron Icon */}
+                <div style={{
+                    position: 'absolute',
+                    right: '20px',
+                    top: '50%',
+                    transform: isExpanded ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%) rotate(0deg)',
+                    fontSize: '1.2rem',
+                    color: 'var(--accent-primary)',
+                    transition: 'transform 0.3s'
                 }}>
                     <FaChevronDown />
                 </div>
