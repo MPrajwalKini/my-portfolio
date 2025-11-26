@@ -163,7 +163,7 @@ const SkillCategory = ({ category, isExpanded, onToggle }) => {
                     className="skill-cards-grid"
                     style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
                         gap: '15px',
                         opacity: isExpanded ? 1 : 0,
                         transition: 'opacity 0.3s'
