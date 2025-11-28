@@ -29,10 +29,31 @@ my-portfolio/
 |
 ├── public/               # Static assets
 |
-├── src/                  # Components, pages, and styles
+├── src/                  # Components, data, and assets
 │   ├── components/
-│   ├── pages/
-│   └── styles/
+|   |   ├── About.jsx
+|   |   ├── Agent.jsx
+|   |   ├── Contact.jsx
+|   |   ├── Cursor.jsx
+|   |   ├── Footer.jsx
+|   |   ├── Hero.jsx
+|   |   ├── MusicPlayer.jsx
+|   |   ├── Navbar.jsx
+|   |   ├── ParticlesBackground.jsx
+|   |   ├── ProjectModal.jsx
+|   |   ├── Projects.jsx
+|   |   └── Skills.jsx
+|   |
+│   ├── data/
+|   |   └── projects.js
+|   |
+│   ├── assets/
+|   |   └── react.svg
+|   |
+|   ├── App.css
+|   ├── App.jsx
+|   ├── index.css
+│   └── main.jsx
 |
 ├── package.json
 ├── vite.config.js
