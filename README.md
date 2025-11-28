@@ -24,17 +24,17 @@ The portfolio serves as my professional identity on the web. It features a clean
 - Node.js
 
 ## Project Structure
-
-- my-portfolio/
-- ├── public/               # Static assets
-- ├── src/                  # Components, pages, and styles
-- │   ├── components/
-- │   ├── pages/
-- │   └── styles/
-- ├── package.json
-- ├── vite.config.js
-- └── README.md
-
+```
+my-portfolio/
+├── public/               # Static assets
+├── src/                  # Components, pages, and styles
+│   ├── components/
+│   ├── pages/
+│   └── styles/
+├── package.json
+├── vite.config.js
+└── README.md
+```
 ## Installation and Setup
 
 ### Prerequisites
