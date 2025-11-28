@@ -106,7 +106,7 @@ You may either upload the built dist/ directory or connect the repository for co
 
 ## Contact
 
-M Prajwal Kini
+**M Prajwal Kini**
 
 GitHub: [https://github.com/MPrajwalKini](https://github.com/MPrajwalKini)
 LinkedIn: [https://www.linkedin.com/in/m-prajwal-kini-885037221/](https://www.linkedin.com/in/m-prajwal-kini-885037221/)
