@@ -24,16 +24,41 @@ The portfolio serves as my professional identity on the web. It features a clean
 - Node.js
 
 ## Project Structure
-
+```
 my-portfolio/
+|
 ├── public/               # Static assets
-├── src/                  # Components, pages, and styles
+|
+├── src/                  # Components, data, and assets
 │   ├── components/
-│   ├── pages/
-│   └── styles/
+|   |   ├── About.jsx
+|   |   ├── Agent.jsx
+|   |   ├── Contact.jsx
+|   |   ├── Cursor.jsx
+|   |   ├── Footer.jsx
+|   |   ├── Hero.jsx
+|   |   ├── MusicPlayer.jsx
+|   |   ├── Navbar.jsx
+|   |   ├── ParticlesBackground.jsx
+|   |   ├── ProjectModal.jsx
+|   |   ├── Projects.jsx
+|   |   └── Skills.jsx
+|   |
+│   ├── data/
+|   |   └── projects.js
+|   |
+│   ├── assets/
+|   |   └── react.svg
+|   |
+|   ├── App.css
+|   ├── App.jsx
+|   ├── index.css
+│   └── main.jsx
+|
 ├── package.json
 ├── vite.config.js
 └── README.md
+```
 
 ## Installation and Setup
 
@@ -81,9 +106,10 @@ You may either upload the built dist/ directory or connect the repository for co
 
 ## Contact
 
-M Prajwal Kini
-GitHub: https://github.com/MPrajwalKini
-LinkedIn: https://www.linkedin.com/in/m-prajwal-kini-885037221/
+**M Prajwal Kini**
+- GitHub: [https://github.com/MPrajwalKini](https://github.com/MPrajwalKini)
+- LinkedIn: [https://www.linkedin.com/in/m-prajwal-kini-885037221/](https://www.linkedin.com/in/m-prajwal-kini-885037221/)
+
 
 ## License
 
