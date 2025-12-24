@@ -111,7 +111,40 @@ const Agent = ({ isOpen, onToggle }) => {
         return false;
     };
 
+    const DAILY_LIMIT = 15;
+
+    const getDailyUsage = () => {
+        const today = new Date().toDateString();
+        const stored = localStorage.getItem('agent_daily_usage');
+
+        if (stored) {
+            const { date, count } = JSON.parse(stored);
+            if (date === today) {
+                return count;
+            }
+        }
+
+        // Reset or initialize
+        const initial = { date: today, count: 0 };
+        localStorage.setItem('agent_daily_usage', JSON.stringify(initial));
+        return 0;
+    };
+
+    const incrementUsage = () => {
+        const today = new Date().toDateString();
+        const currentCount = getDailyUsage();
+        const updated = { date: today, count: currentCount + 1 };
+        localStorage.setItem('agent_daily_usage', JSON.stringify(updated));
+        return updated.count;
+    };
+
     const callPerplexityAPI = async (query, retryCount = 0) => {
+        // usage limit check
+        const usage = getDailyUsage();
+        if (usage >= DAILY_LIMIT) {
+            return `Daily limit of ${DAILY_LIMIT} requests reached. Please try again tomorrow! (This is to manage API costs for the hosted website)`;
+        }
+
         const apiKey = import.meta.env.VITE_PERPLEXITY_API_KEY;
         if (!apiKey || apiKey === 'your_perplexity_api_key_here') {
             return "I need a valid Perplexity API Key! Please add your key to the .env file.";
@@ -166,6 +199,9 @@ const Agent = ({ isOpen, onToggle }) => {
                 }
                 return "I'm having trouble with that question. Could you rephrase it?";
             }
+
+            // Increment usage only on success
+            incrementUsage();
 
             return data.choices[0].message.content;
         } catch (error) {
